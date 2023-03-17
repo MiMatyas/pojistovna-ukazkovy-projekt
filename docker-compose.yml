@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  db: 
+    image: mysql:latest
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'Heslo123'
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mySQL-final/databaze-pro-pojistovnu.sql:/docker-entrypoint-initdb.d/data.sql
+  pojistovna:
+    image: spring-pojistovna
+    container_name: spring
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      MYSQL_DATABASE: databaze_pro_pojistovnu
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Heslo123
+  react: 
+    image: react
+    container_name: react
+    ports:
+      - 3000:3000
+      
